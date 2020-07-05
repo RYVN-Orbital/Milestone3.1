@@ -44,8 +44,12 @@ public class Timetable {
     //used when theres fixed lesson
     public void removeFreeDay(int day) {
         if (possibleFreeDay.contains(day)) {
-            possibleFreeDay.remove((Object) day);
+            possibleFreeDay.remove((Integer) day);
         }
+    }
+
+    public List<Integer> getPossibleFreeDay() {
+        return this.possibleFreeDay;
     }
 
     //method to add the first lesson on the day

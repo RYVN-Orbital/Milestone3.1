@@ -139,7 +139,7 @@ public /*abstract*/ class Lesson {
     @Override
     public String toString() {
         return this.startTime + "-" + this.endTime + " " +
-                this.moduleCode + " " + this.lessonNum + " " + this.venue;
+                this.moduleCode + " " + this.lessonType + " "+ this.lessonNum + " " + this.venue;
     }
 }
 

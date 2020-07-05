@@ -60,7 +60,7 @@ public class LessonSimulator {
         } else {
             Schedule lectureSchedule = new Schedule(this.listOfLectures, this.timetable);
             lectStage = lectureSchedule.scheduling(freeDay);
-            freeDay = this.timetable.getFreeDay();
+            freeDay = this.timetable.getPossibleFreeDay();
         }
         if (lectStage) {	//passed lectStage aka has at least one freeDay
             if (this.listOfLabs.isEmpty()) {
@@ -68,7 +68,7 @@ public class LessonSimulator {
             } else {
                 Schedule labSchedule = new Schedule(this.listOfLabs, this.timetable);
                 labStage = labSchedule.scheduling(freeDay);
-                freeDay = this.timetable.getFreeDay();
+                freeDay = this.timetable.getPossibleFreeDay();
             }
         }
         if (labStage) {
@@ -77,7 +77,7 @@ public class LessonSimulator {
             } else {
                 Schedule secSchedule = new Schedule(this.listOfSectionals, this.timetable);
                 secStage = secSchedule.scheduling(freeDay);
-                freeDay = this.timetable.getFreeDay();
+                freeDay = this.timetable.getPossibleFreeDay();
             }
         }
 
@@ -87,7 +87,7 @@ public class LessonSimulator {
             } else {
                 Schedule recSchedule = new Schedule(this.listOfRecitations, this.timetable);
                 recStage = recSchedule.scheduling(freeDay);
-                freeDay = this.timetable.getFreeDay();
+                freeDay = this.timetable.getPossibleFreeDay();
             }
         }
 

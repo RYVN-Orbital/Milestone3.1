@@ -41,9 +41,6 @@ class Schedule {
             } else {
                 //lect may consists of Lectures with the same lesson code
                 //check for similar lesson code
-
-                //EDIT:
-                /*int lessonCode = allLesson.getAllTimings().get(0).getNum();*/
                 String lessonCode = allLesson.getAllTimings().get(0).getNum();
 
                 //included = true suggests that the lesson list is added to either fixedLectures or notFixedLectures
@@ -93,7 +90,7 @@ class Schedule {
         }
 
         //there are free days
-        FilterFreeDay newFilteredLesson = new FilterFreeDay(notFixedLessons, this.timetable.getFreeDay(), this.timetable);
+        FilterFreeDay newFilteredLesson = new FilterFreeDay(notFixedLessons, this.timetable.getPossibleFreeDay(), this.timetable);
         //filter(): sort alr
         List<AllLesson> newFilteredList = newFilteredLesson.filter();
 
@@ -108,8 +105,6 @@ class Schedule {
         for (AllLesson listLessons : newFilteredList) {
             //hasAdded indicates whether a lecture has been added into the tt
             boolean hasAdded = false;
-            //EDIT:
-            //int lessonNum = 0;
             String lessonNum = "";
             Lesson addedLesson = null;
             //getAlltimings == possibleTime() cuz alr filtered in lesson Sim
@@ -141,6 +136,7 @@ class Schedule {
             //lesson for that mod is not added at all (means coincide w other lessons)
             //not sure
             if (! hasAdded) {
+
                 for (AllLesson ogLesson : this.listOfLessons) {
                     boolean added = false;
                     if (ogLesson.getCode().equals(listLessons.getCode())) {
@@ -149,25 +145,28 @@ class Schedule {
                                 if (this.timetable.check(lesson)) {
                                     added = true;
                                     this.timetable.add(lesson);
+                                    this.timetable.removeFreeDay(lesson.getDay());
                                     break;
                                 }
                             }
-                            if (added == false) {
+                            if (!added) {
                                 System.out.println("error 6");
                                 this.timetable.setPossibleFreeDay(noFreeDay);
                                 return false;
                             }
                         } else {
                             Lesson addLesson = null;
+                            List<Integer> listOfDays = new ArrayList<>();
                             for (Lesson lesson : ogLesson.getAllTimings()) {
                                 if (added) {
                                     if (lesson.getNum().equals(addLesson.getNum())) {
                                         if (this.timetable.check(lesson)) {
                                             this.timetable.add(lesson);
+                                            listOfDays.add(lesson.getDay());
                                         } else {
-                                            System.out.println("error 7");
                                             this.timetable.removeLesson(addLesson);
                                             added = false;
+                                            listOfDays = new ArrayList<>();
                                         }
                                     } else {
                                         break;
@@ -177,16 +176,22 @@ class Schedule {
                                         this.timetable.add(lesson);
                                         addLesson = lesson;
                                         added = true;
+                                        listOfDays.add(lesson.getDay());
                                     }
                                 }
                             }
+                            if (!added) {
+                                System.out.println("error 7");
+                                this.timetable.setPossibleFreeDay(noFreeDay);
+                                return false;
+                            } else {
+                                for (int days : listOfDays) {
+                                    this.timetable.removeFreeDay(days);
+                                }
+                            }
+
                         }
 
-                        if (added == false) {
-                            System.out.println("error 7");
-                            this.timetable.setPossibleFreeDay(noFreeDay);
-                            return false;
-                        }
                         break;
                     }
 
