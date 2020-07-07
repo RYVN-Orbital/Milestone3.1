@@ -1,38 +1,41 @@
 <resources>
-    <string name="app_name">My First Application</string>
-    <string name="NUSTT_text">NUSTT</string>
-    <string name="welcome_button">Welcome</string>
-    <string name="quote_text">New Sem, New You.</string>
-    <string name="my_modules_border">MY MODULES</string>
-    <string name="edit_button">Edit</string>
-    <string name="close_edit_button">Close Edit</string>
-    <string name="view_Timetable_button">VIEW TIMETABLE</string>
-    <string name="generate_Timetable_button">GENERATE TIMETABLE</string>
-    <string name="add_modules_button">Module</string>
-    <string name="my_timetable_border">MY TIMETABLE</string>
-    <string name="oops_text">Oops!</string>
-    <string name="no_timetable_warning">You have not generated your timetable.</string>
-    <string name="criteria_text">Criteria</string>
-    <string name="specific_lesson_text">Specific Lesson</string>
-    <string name="lesson_type_text">Type</string>
-    <string name="lesson_number_text">Lesson Code</string>
-    <string name="refine_criteria_button">REFINE CRITERIA</string>
-    <string name="no_ideal_warning">No ideal timetable found!</string>
-    <string name="generated_msg">Timetable Generated!</string>
-    <string name="invalid_mods">Modules are invalid!</string>
-    <string name="refine_modules_button">REFINE MODULES</string>
-    <string name="invalid_lesson_text">Lesson cannot be found!</string>
-    <string name="refine_condition_button">REFINE CONDITION</string>
+<string name="app_name">My First Application</string>
+<string name="NUSTT_text">NUSTT</string>
+<string name="welcome_button">Welcome</string>
+<string name="quote_text">New Sem, New You.</string>
+<string name="my_modules_border">MY MODULES</string>
+<string name="edit_button">Edit</string>
+<string name="close_edit_button">Close Edit</string>
+<string name="view_Timetable_button">VIEW TIMETABLE</string>
+<string name="generate_Timetable_button">GENERATE TIMETABLE</string>
+<string name="add_modules_button">Module</string>
+<string name="my_timetable_border">MY TIMETABLE</string>
+<string name="oops_text">Oops!</string>
+<string name="no_timetable_warning">You have not generated your timetable.</string>
+<string name="criteria_text">Criteria</string>
+<string name="specific_lesson_text">Specific Lesson</string>
+<string name="lesson_type_text">Type</string>
+<string name="lesson_number_text">Lesson Code</string>
+<string name="refine_criteria_button">REFINE CRITERIA</string>
+<string name="no_ideal_warning">No ideal timetable found!</string>
+<string name="generated_msg">Timetable Generated!</string>
+<string name="invalid_mods">Modules are invalid!</string>
+<string name="refine_modules_button">REFINE MODULES</string>
+<string name="invalid_lesson_text">Lesson cannot be found!</string>
+<string name="refine_condition_button">REFINE CONDITION</string>
+<string name="close_info_button">CLOSE</string>
+<string name="criteria_textview">Least number of working days</string>
+<string name="none_text">None</string>
 
-    <string-array name="criteria">
-        <item>Least Number of Working Days</item>
-    </string-array>
+<string-array name="criteria">
+    <item>Least Number of Working Days</item>
+</string-array>
 
-    <string-array name="typeOfLesson">
-        <item>Lecture</item>
-        <item>Tutorial</item>
-        <item>Recitation</item>
-        <item>Laboratory</item>
-        <item>Sectional Teaching</item>
-    </string-array>
+<string-array name="typeOfLesson">
+    <item>Lecture</item>
+    <item>Tutorial</item>
+    <item>Recitation</item>
+    <item>Laboratory</item>
+    <item>Sectional Teaching</item>
+</string-array>
 </resources>

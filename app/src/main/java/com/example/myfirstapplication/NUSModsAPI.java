@@ -127,12 +127,7 @@ public class NUSModsAPI {
                         (moduleCode, classNum, startTime, endTime, dayOfTheWeek, lessonVenue, listOfWeeks, lessonType);
                 allLessonTimings.add(newLesson);
             }
-            //break;
-            //break out of the loop since we only need semester data
-            //} else {
-            //continue;
-            //}
-            //}
+
             return allLessonTimings;
         }
     }
