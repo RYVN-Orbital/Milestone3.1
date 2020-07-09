@@ -23,20 +23,18 @@
 
     <Button
         android:id="@+id/viewButton"
-        android:layout_width="129dp"
-        android:layout_height="40dp"
-        android:background="@color/blue"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/eye"
         android:fontFamily="sans-serif-medium"
         android:onClick="startThread"
-        android:text="@string/view_Timetable_button"
-        android:textColor="@color/pink"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.943"
+        app:layout_constraintHorizontal_bias="0.836"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.028" />
+        app:layout_constraintVertical_bias="0.025" />
 
     <Button
         android:id="@+id/infoButton"
@@ -57,10 +55,10 @@
         android:background="@drawable/refresh_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.322"
+        app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.028" />
+        app:layout_constraintVertical_bias="0.025" />
 
     <Button
         android:id="@+id/editModsBtn"
@@ -69,10 +67,10 @@
         android:background="@drawable/modules_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.535"
+        app:layout_constraintHorizontal_bias="0.606"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.028" />
+        app:layout_constraintVertical_bias="0.026" />
 
     <TextView
         android:id="@+id/infoTextview"
@@ -98,10 +96,10 @@
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintHorizontal_bias="0.096"
         app:layout_constraintStart_toEndOf="@+id/infoTextview"
         app:layout_constraintTop_toBottomOf="@+id/editCondBtn"
-        app:layout_constraintVertical_bias="0.03" />
+        app:layout_constraintVertical_bias="0.034" />
 
     <TextView
         android:id="@+id/editModsTextview"
@@ -112,9 +110,23 @@
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toEndOf="@+id/editCondTextview"
         app:layout_constraintTop_toBottomOf="@+id/editModsBtn"
-        app:layout_constraintVertical_bias="0.03" />
+        app:layout_constraintVertical_bias="0.034" />
+
+    <TextView
+        android:id="@+id/viewTextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lobster"
+        android:text="@string/view_tt"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.291"
+        app:layout_constraintStart_toEndOf="@+id/editModsTextview"
+        app:layout_constraintTop_toBottomOf="@+id/viewButton"
+        app:layout_constraintVertical_bias="0.032" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
