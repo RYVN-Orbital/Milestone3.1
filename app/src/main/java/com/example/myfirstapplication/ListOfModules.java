@@ -50,10 +50,14 @@ public class ListOfModules extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent viewTimetable = new Intent(getApplicationContext(), NoTimetable.class);
-                startActivity(viewTimetable);
-            }
-        });
+                if (ViewTimetable.confirmedTT == null) {
+                    Intent noTimetable = new Intent(getApplicationContext(), NoTimetable.class);
+                    startActivity(noTimetable);
+                } else {
+                    Intent viewTimetable = new Intent(getApplicationContext(), GeneratedTimetable.class);
+                    startActivity(viewTimetable);
+                }
+            }});
 
         //generate button to set requirement for new timetable
         Button generateTimetableButton = (Button) findViewById(R.id.generateTimetableButton);

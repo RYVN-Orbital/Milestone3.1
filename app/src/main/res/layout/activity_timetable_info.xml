@@ -23,14 +23,14 @@
 
     <ListView
         android:id="@+id/modulesListView"
-        android:layout_width="300dp"
-        android:layout_height="332dp"
+        android:layout_width="235dp"
+        android:layout_height="315dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.088"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.188" />
+        app:layout_constraintVertical_bias="0.227" />
 
     <TextView
         android:id="@+id/criteriaTextView"
@@ -92,4 +92,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/specificLessonTextView"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/listModsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lobster"
+        android:text="@string/my_modules_border"
+        android:textColor="@color/purple"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.026" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

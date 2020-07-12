@@ -20,6 +20,7 @@ import java.util.Set;
 
 public class ViewTimetable extends AppCompatActivity {
     public static Timetable confirmedTT;
+    //store the timetable
     public TextView timetableTextView;
     public Button viewButton;
     public Button infoButton;
@@ -194,7 +195,7 @@ public class ViewTimetable extends AppCompatActivity {
                     //Timetable tt = new Timetable(1);
 
                     LessonSimulator simulator = new LessonSimulator(listOfLectures, listOfLabs, listOfTutorials, listOfRecitations, listOfSectionals, tt);
-                    confirmedTT = simulator.generate(tt.getPossibleFreeDay());
+                    ViewTimetable.confirmedTT = simulator.generate(tt.getPossibleFreeDay());
                     if (confirmedTT.getPossible()) {
                         System.out.println(confirmedTT);
                         runOnUiThread(new Runnable() {
@@ -206,6 +207,7 @@ public class ViewTimetable extends AppCompatActivity {
                     } else {
                         //error: cannot print timetable
                         System.out.println("Error");
+                        ViewTimetable.confirmedTT = null;
                         Intent errorTT = new Intent(getApplicationContext(), ErrorTimetable.class);
                         startActivity(errorTT);
                     }

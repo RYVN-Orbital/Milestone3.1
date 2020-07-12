@@ -10,6 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
 
+import static com.example.myfirstapplication.SetRequirement.*;
+
 public class TimetableInfo extends AppCompatActivity {
     public ListView modulesListView;
     public TextView criteriaTextView;
@@ -40,11 +42,17 @@ public class TimetableInfo extends AppCompatActivity {
         //specific lesson textview
         specificLessonTextView = (TextView) findViewById(R.id.specificLessonTextView);
         lessonTextView = (TextView) findViewById(R.id.conditionTextView);
-        String conditionLessonModuleCode = SetRequirement.modEditText.getText().toString();
-        String conditionLessonNum = SetRequirement.lessonCodeEditText.getText().toString();
-        String conditionLessonType = SetRequirement.typeSpinner.getSelectedItem().toString();
-        lesson = conditionLessonModuleCode + " " + conditionLessonType + " " + conditionLessonNum;
-        lessonTextView.setText(lesson);
+        String conditionLessonModuleCode = modEditText.getText().toString();
+        String conditionLessonNum = lessonCodeEditText.getText().toString();
+        String conditionLessonType = typeSpinner.getSelectedItem().toString();
+        //if there is no specific lesson chosen
+        //havent solved ths part yet!!!!!!
+        if (modEditText.getText() == null || lessonCodeEditText.getText() == null) {
+            lessonTextView.setText("None");
+        } else {
+            lesson = conditionLessonModuleCode + " " + conditionLessonType + " " + conditionLessonNum;
+            lessonTextView.setText(lesson);
+        }
 
         //close Button
         closeButton = (Button) findViewById(R.id.closeInfoBtn);
