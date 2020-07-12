@@ -131,12 +131,7 @@ class FilterFreeDay {
                     }
                 }
             }
-                //this.freeDay is updated to the next free day
-                //if (hasError) {
-                    //FilterFreeDay filterAgain = new FilterFreeDay(this.unfilteredLesson, this.freeDay, this.timetable);
-                    //filteredLesson = filterAgain.filter();
-                //}
-                if (/*filteredLesson == null ||*/ this.freeDay.isEmpty()) {
+                if (this.freeDay.isEmpty()) {
                     return null;
                 } else {
                     filteredLesson.sort(comp);

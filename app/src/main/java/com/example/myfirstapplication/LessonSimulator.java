@@ -58,7 +58,7 @@ public class LessonSimulator {
         if (this.listOfLectures.isEmpty()) {
             lectStage = true;
         } else {
-            Schedule lectureSchedule = new Schedule(this.listOfLectures, this.timetable);
+            LectureSchedule lectureSchedule = new LectureSchedule(this.listOfLectures, this.timetable);
             lectStage = lectureSchedule.scheduling(freeDay);
             freeDay = this.timetable.getPossibleFreeDay();
         }

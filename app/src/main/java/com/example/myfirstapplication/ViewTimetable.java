@@ -191,8 +191,6 @@ public class ViewTimetable extends AppCompatActivity {
                 }
 
                 if (!hasError) {
-                    //EDIT: Shifted up
-                    //Timetable tt = new Timetable(1);
 
                     LessonSimulator simulator = new LessonSimulator(listOfLectures, listOfLabs, listOfTutorials, listOfRecitations, listOfSectionals, tt);
                     ViewTimetable.confirmedTT = simulator.generate(tt.getPossibleFreeDay());

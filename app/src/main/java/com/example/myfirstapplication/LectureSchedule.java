@@ -1,17 +1,18 @@
 package com.example.myfirstapplication;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
-class Schedule {
+public class LectureSchedule {
     //sorted based on num of alternative lessons, then module code
     private final List<AllLesson> listOfLessons;
     private final Timetable timetable;
     private final static List<Integer> noFreeDay = new ArrayList<>();
     private final static Comparator<AllLesson> comp = new LeastAlternativeComparator();
 
-    public Schedule(List<AllLesson> listOfLessons, Timetable timetable) {
+    public LectureSchedule(List<AllLesson> listOfLessons, Timetable timetable) {
         this.listOfLessons = listOfLessons;
         this.timetable = timetable;
     }
@@ -19,17 +20,81 @@ class Schedule {
     //return type is boolean
     //true if the scheduling is successful and vice versa
     public boolean scheduling(List<Integer> freeDay) {
-        FilterFreeDay filterLesson = new FilterFreeDay(this.listOfLessons, freeDay, this.timetable);
-        List<AllLesson> filteredList = filterLesson.filter();
 
-        if (filteredList == null || this.timetable.getFreeDay().isEmpty()) {
-            //impossible tt, hence 0 possible free day
-            System.out.println("error 1");
+        //usually fixed lesson is only for lectures
+        ArrayList<AllLesson> fixedLessons = new ArrayList<>();
+        ArrayList<AllLesson> notFixedLessons = new ArrayList<>();
+        for (AllLesson allLesson : this.listOfLessons) {
+            if (allLesson.size() == 1) {
+                fixedLessons.add(allLesson);
+            } else if (allLesson.size() == 0) { //shldnt need this condition; put here in case
+                continue;
+            } else {
+                //lect may consists of Lectures with the same lesson code
+                //check for similar lesson code
+                String lessonCode = allLesson.getAllTimings().get(0).getNum();
+
+                //included = true suggests that the lesson list is added to either fixedLectures or notFixedLectures
+                boolean included = false;
+                for (int i = 1; i < allLesson.size(); ++ i) {
+                    if (!allLesson.getAllTimings().get(i).getNum().equals(lessonCode)) {
+                        notFixedLessons.add(allLesson);
+                        included = true;
+                        break;
+                    }
+                }
+                //all the lectures in the list have the same lesson code
+                if (! included) {
+                    fixedLessons.add(allLesson);
+                }
+            }
+        }
+
+        //after separating them into fixed and not fixed, sort again
+        fixedLessons.sort(comp);
+        notFixedLessons.sort(comp);
+
+        //adding fixed lectures into tt
+        //every lessons inside must be added in (for same lesson code too)
+        for (AllLesson newLessonList : fixedLessons) {
+            for (Lesson newLesson : newLessonList.getAllTimings()) {
+                if (this.timetable.check(newLesson)) {
+                    //day of fixedLesson = fixed day
+                    //remove fixed day from possible free day
+                    this.timetable.removeFreeDay(newLesson.getDay());
+                    freeDay.remove((Integer) newLesson.getDay());
+                    this.timetable.add(newLesson);
+                } else {
+                    //if newlecture cant be added
+                    //an it is a fixed lect
+                    //return error tt
+                    System.out.println("error 2");
+                    this.timetable.setPossibleFreeDay(noFreeDay);
+                    return false;
+                }
+            }
+        }
+
+        //after adding all fixed lectures, no free days at all = impossible
+        if (this.timetable.getFreeDay().isEmpty()) {
+            System.out.println("error 3");
+            return false;
+        }
+
+        //there are free days
+        FilterFreeDay newFilteredLesson = new FilterFreeDay(notFixedLessons, freeDay, this.timetable);
+        //filter(): sort alr
+        List<AllLesson> newFilteredList = newFilteredLesson.filter();
+
+        //when return null, no free day
+        //not sure
+        if (newFilteredList == null) {
+            System.out.println("error 4");
             this.timetable.setPossibleFreeDay(noFreeDay);
             return false;
         }
 
-        for (AllLesson listLessons : filteredList) {
+        for (AllLesson listLessons : newFilteredList) {
             //hasAdded indicates whether a lecture has been added into the tt
             boolean hasAdded = false;
             String lessonNum = "";
@@ -132,4 +197,3 @@ class Schedule {
         return true;
     }
 }
-
