@@ -26,9 +26,11 @@ class FilterFreeDay {
             for (AllLesson allLesson : this.unfilteredLesson) {
                 filteredLesson.add(AllLesson.deepCopy(allLesson));
             }
+
             boolean hasError = false;
             for (AllLesson allLesson : filteredLesson) {
                 //remove cmi lessons
+
                 if (this.freeDay.isEmpty()) {
                     return null;
                 } else {
@@ -47,6 +49,7 @@ class FilterFreeDay {
                             if (!removedLessonCode.contains(lesson.getNum())) {
                                 removedLessonCode.add(lesson.getNum());
                             }
+
                         }
                     }
 
@@ -65,6 +68,7 @@ class FilterFreeDay {
                         for (Lesson lesson : removeLesson) {
                             allLesson.remove(lesson);
                         }
+
                         continue;
                     } else {
                         //everything in the removeLesson list lie on the free day
@@ -126,8 +130,6 @@ class FilterFreeDay {
                                 }
                             }
                         }
-                        //hasError = true;
-                        //break;
                     }
                 }
             }

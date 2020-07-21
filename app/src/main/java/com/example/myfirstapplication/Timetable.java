@@ -169,15 +169,11 @@ public class Timetable {
                 Lesson confirmedLesson = selectedList.get(i);
 
                 //first confirmedlesson
-                if (i == 0) {
-                    if (confirmedLesson.getStartTime() >= endOfNewLesson) {
+                if (i == 0 && confirmedLesson.getStartTime() >= endOfNewLesson) {
                         return true;
-                    } else {
-                        continue;
                     }
 
-                    //last confirmedLesson
-                } else if (i == selectedList.size() - 1) {
+                if (i == selectedList.size() - 1) {
                     //NewLesson happens after the end of the confirmedLesson
                     if (confirmedLesson.getEndTime() <= startOfNewLesson) {
                         return true;

@@ -56,7 +56,7 @@ public class NUSModsAPI {
         String moduleCode = modCode;
 
         //form api website
-        String website = "https://api.nusmods.com/v2/2019-2020/modules/";
+        String website = "https://api.nusmods.com/v2/2020-2021/modules/";
         String jsonWeb = ".json";
 
         //fetch json data and parse into string
@@ -80,17 +80,17 @@ public class NUSModsAPI {
             //get the timing and venue for all the lessons of the module
 
             JSONObject semData;
-            JSONObject sem2 = null;
+            JSONObject sem = null;
 
             for (int i = 0; i < lessonsInfo.length(); i++ ) {
                 semData = (JSONObject) lessonsInfo.get(i);
-                if (semData.getInt("semester") == 2) {
-                    sem2 = semData;
+                if (semData.getInt("semester") == 1) {
+                    sem = semData;
                     break;
                 }
             }
 
-            if (sem2 == null) {
+            if (sem == null) {
                 return null;
             }
             /*
@@ -105,10 +105,10 @@ public class NUSModsAPI {
                 sem2 = (JSONObject) lessonsInfo.get(1);
             }*/
 
-            JSONArray lessonsTimingsForSem2 = sem2.getJSONArray("timetable");
-            for (int j = 0; j < lessonsTimingsForSem2.length(); j++) {
+            JSONArray lessonsTimingsForSem = sem.getJSONArray("timetable");
+            for (int j = 0; j < lessonsTimingsForSem.length(); j++) {
                 //get the necessary lesson details for each class
-                JSONObject eachClass = lessonsTimingsForSem2.getJSONObject(j);
+                JSONObject eachClass = lessonsTimingsForSem.getJSONObject(j);
                 String classNum = eachClass.getString("classNo");
                 int startTime = Integer.parseInt(eachClass.getString("startTime"));
                 int endTime = Integer.parseInt(eachClass.getString("endTime"));
