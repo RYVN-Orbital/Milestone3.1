@@ -3,10 +3,13 @@ package com.example.myfirstapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Spinner;
 
@@ -28,13 +31,55 @@ public class ViewTimetable extends AppCompatActivity {
     public Button editModsBtn;
     private Handler mainHandler = new Handler();
 
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
+    private static CheckBox mCheckbox;
+    private static Button saveBtn;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_timetable);
         viewButton = (Button) findViewById(R.id.viewButton);
-        timetableTextView = (TextView) findViewById(R.id.timetableTextView);
 
+        //saving the timetable
+        timetableTextView = (TextView) findViewById(R.id.timetableTextView);
+        mCheckbox = (CheckBox) findViewById(R.id.checkBox);
+        saveBtn = (Button) findViewById(R.id.saveBtn);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
+
+        checkSharedPreferences();
+
+        //after you click the save button and the checkbox is checked, the generated tt will be saved
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //save the checkbox preference
+                if (mCheckbox.isChecked()) {
+                    //set a checkbox when the app starts
+                    mEditor.putString(getString(R.string.checkbox), "True");
+                    mEditor.commit();
+
+                    //save the timetable generated
+                    String timetable = timetableTextView.getText().toString();
+                    mEditor.putString(getString(R.string.timetable), timetable);
+                    mEditor.commit();
+
+                    Intent displayTT = new Intent(ViewTimetable.this, GeneratedTimetable.class);
+                    startActivity(displayTT);
+                } else {
+                    //set a checkbox when the app starts
+                    mEditor.putString(getString(R.string.checkbox), "False");
+                    mEditor.commit();
+
+                    //save the timetable generated
+                    mEditor.putString(getString(R.string.timetable), "");
+                    mEditor.commit();
+                }
+            }
+        });
         //info about the tt
         infoButton = (Button) findViewById(R.id.infoButton);
         infoButton.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +116,21 @@ public class ViewTimetable extends AppCompatActivity {
 
     }
 
+    //check the shared preferences and set them accordingly
+    private void checkSharedPreferences() {
+        String checkbox = mPreferences.getString(getString(R.string.checkbox), "False");
+        String timetableCreated = mPreferences.getString(getString(R.string.timetable), "");
+        //on default, checkbox is not checked and timetable generated is empty
+
+        timetableTextView.setText(timetableCreated);
+
+        if (checkbox.equals("True")) {
+            mCheckbox.setChecked(true);
+        } else {
+            mCheckbox.setChecked(false);
+        }
+    }
+
     //background thread of generating the timetable
     public void startThread(View view) {
         generateTimetableRunnable runnable = new generateTimetableRunnable();
@@ -103,7 +163,8 @@ public class ViewTimetable extends AppCompatActivity {
                 for (int i = 0; i < numberOfModules; ++i) {
                     String newModuleCode = EditModules.listOfUserInput.get(i);
                     List<Lesson> lessonsList = NUSModsAPI.fetchLessonTimings(newModuleCode);
-                    Module newModule = DataManagement.makeModule(newModuleCode, lessonsList);
+                    String examDate = NUSModsAPI.fetchExamDate(newModuleCode);
+                    Module newModule = DataManagement.makeModule(newModuleCode, lessonsList, examDate);
 
                     if (newModule == null) {
                         hasError = true;
