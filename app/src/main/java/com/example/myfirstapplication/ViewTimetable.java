@@ -1,3 +1,4 @@
+
 package com.example.myfirstapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.Runnable;
-import java.util.Set;
+
 
 public class ViewTimetable extends AppCompatActivity {
     public static Timetable confirmedTT;
@@ -41,6 +42,42 @@ public class ViewTimetable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_timetable);
+        viewButton = (Button) findViewById(R.id.viewButton);
+        timetableTextView = (TextView) findViewById(R.id.timetableTextView);
+
+        //info about the tt
+        infoButton = (Button) findViewById(R.id.infoButton);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent getInfoIntent = new Intent(getApplicationContext(), TimetableInfo.class);
+                startActivity(getInfoIntent);
+            }
+        });
+
+        //edit condition
+        editConditionButton = (Button) findViewById(R.id.editCondBtn);
+        editConditionButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent editCondIntent = new Intent(getApplicationContext(), SetRequirement.class);
+                startActivity(editCondIntent);
+            }
+        });
+
+        //edit modules
+        editModsBtn = (Button) findViewById(R.id.editModsBtn);
+        editModsBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent editCondIntent = new Intent(getApplicationContext(), EditModules.class);
+                startActivity(editCondIntent);
+            }
+        });
+
         viewButton = (Button) findViewById(R.id.viewButton);
 
         //saving the timetable
@@ -80,43 +117,8 @@ public class ViewTimetable extends AppCompatActivity {
                 }
             }
         });
-        //info about the tt
-        infoButton = (Button) findViewById(R.id.infoButton);
-        infoButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent getInfoIntent = new Intent(getApplicationContext(), TimetableInfo.class);
-                startActivity(getInfoIntent);
-            }
-        });
-
-        //edit condition
-        editConditionButton = (Button) findViewById(R.id.editCondBtn);
-        editConditionButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent editCondIntent = new Intent(getApplicationContext(), SetRequirement.class);
-                startActivity(editCondIntent);
-            }
-        });
-
-        //edit modules
-        editModsBtn = (Button) findViewById(R.id.editModsBtn);
-        editModsBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent editCondIntent = new Intent(getApplicationContext(), EditModules.class);
-                startActivity(editCondIntent);
-            }
-        });
-
-
     }
 
-    //check the shared preferences and set them accordingly
     private void checkSharedPreferences() {
         String checkbox = mPreferences.getString(getString(R.string.checkbox), "False");
         String timetableCreated = mPreferences.getString(getString(R.string.timetable), "");
@@ -130,6 +132,7 @@ public class ViewTimetable extends AppCompatActivity {
             mCheckbox.setChecked(false);
         }
     }
+
 
     //background thread of generating the timetable
     public void startThread(View view) {
@@ -163,8 +166,8 @@ public class ViewTimetable extends AppCompatActivity {
                 for (int i = 0; i < numberOfModules; ++i) {
                     String newModuleCode = EditModules.listOfUserInput.get(i);
                     List<Lesson> lessonsList = NUSModsAPI.fetchLessonTimings(newModuleCode);
-                    String examDate = NUSModsAPI.fetchExamDate(newModuleCode);
-                    Module newModule = DataManagement.makeModule(newModuleCode, lessonsList, examDate);
+                    //String examDate = NUSModsAPI.fetchExamDate(newModuleCode);
+                    Module newModule = DataManagement.makeModule(newModuleCode, lessonsList);
 
                     if (newModule == null) {
                         hasError = true;
@@ -281,6 +284,15 @@ public class ViewTimetable extends AppCompatActivity {
         }
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 

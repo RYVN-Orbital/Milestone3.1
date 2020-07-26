@@ -14,7 +14,6 @@ public class Module {
     protected AllSectional allSec;
     protected AllRecitation allRec;
 
-
     public Module(String moduleCode, Lesson... arrayLesson) {
         this.moduleCode = moduleCode;
         this.lessons = Arrays.asList(arrayLesson);

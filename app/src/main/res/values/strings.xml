@@ -22,6 +22,7 @@
     <string name="invalid_mods">Modules are invalid!</string>
     <string name="refine_modules_button">REFINE MODULES</string>
     <string name="invalid_lesson_text">Lesson cannot be found!</string>
+    <string name="exam_dates_clash">Examination Dates clash!</string>
     <string name="refine_condition_button">REFINE CONDITION</string>
     <string name="close_info_button">CLOSE</string>
     <string name="criteria_textview">Least number of working days</string>
@@ -29,7 +30,11 @@
     <string name="info_text">Information</string>
     <string name="edit_mods">Edit Modules</string>
     <string name="edit_condition">Edit Condition</string>
-    <string name="view_tt">View Timetable</string>
+    <string name="create_tt">Create Timetable</string>
+    <string name="current_tt">Current Timetable</string>
+    <string name="save_my_tt">Save My Timetable</string>
+    <string name="checkbox">com.example.myfirstapplication.checkbox</string>
+    <string name="timetable">com.example.myfirstapplication.timetable</string>
     <string-array name="criteria">
         <item>Least Number of Working Days</item>
     </string-array>

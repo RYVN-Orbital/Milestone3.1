@@ -10,7 +10,7 @@
         android:id="@+id/timetableTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/purple"
+        android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

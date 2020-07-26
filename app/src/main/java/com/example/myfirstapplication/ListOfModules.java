@@ -50,7 +50,7 @@ public class ListOfModules extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (ViewTimetable.confirmedTT == null) {
+                if (GeneratedTimetable.timetableTextView == null) {
                     Intent noTimetable = new Intent(getApplicationContext(), NoTimetable.class);
                     startActivity(noTimetable);
                 } else {

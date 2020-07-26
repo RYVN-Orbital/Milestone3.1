@@ -69,7 +69,6 @@ public class NUSModsAPI {
 
             //parse the JSON string
             JSONObject jsonLessons = new JSONObject(result);
-
             Iterator<String> listOfKeys = jsonLessons.keys();
             //while (listOfKeys.hasNext()) {
             // get timetable of all lessons
