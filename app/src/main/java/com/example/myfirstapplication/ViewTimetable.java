@@ -123,7 +123,7 @@ public class ViewTimetable extends AppCompatActivity {
 
                     Intent displayTT = new Intent(ViewTimetable.this, GeneratedTimetable.class);
                     startActivity(displayTT);
-                } else {
+                } /*else {
                     //set a checkbox when the app starts
                     mEditor.putString(getString(R.string.checkbox), "False");
                     mEditor.commit();
@@ -131,7 +131,7 @@ public class ViewTimetable extends AppCompatActivity {
                     //save the timetable generated
                     mEditor.putString(getString(R.string.timetable), "");
                     mEditor.commit();
-                }
+                }*/
             }
         });
     }
