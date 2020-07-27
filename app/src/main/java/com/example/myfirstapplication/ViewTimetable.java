@@ -158,6 +158,7 @@ public class ViewTimetable extends AppCompatActivity {
             List<AllLesson> listOfSectionals = new ArrayList<>();
             List<AllLesson> listOfRecitations = new ArrayList<>();
             List<AllLesson> listOfTutorials = new ArrayList<>();
+            List<ExamDateTime> examTimings = new ArrayList<>();
             boolean hasError = false;
 
             try {
@@ -166,20 +167,42 @@ public class ViewTimetable extends AppCompatActivity {
                 for (int i = 0; i < numberOfModules; ++i) {
                     String newModuleCode = EditModules.listOfUserInput.get(i);
                     List<Lesson> lessonsList = NUSModsAPI.fetchLessonTimings(newModuleCode);
-                    //String examDate = NUSModsAPI.fetchExamDate(newModuleCode);
-                    Module newModule = DataManagement.makeModule(newModuleCode, lessonsList);
 
+                    /*new - check for exam time/date*/
+                    ExamDateTime examDate = NUSModsAPI.fetchExamDate(newModuleCode);
+                    if (examDate == null) {
+                        hasError = true;
+                        Intent errorTT = new Intent(getApplicationContext(), NullModuleError.class);
+                        startActivity(errorTT);
+                        break;
+                    } else if (examDate.isEmpty()) {
+                        continue;
+                    } else if (examTimings.isEmpty()) {
+                        examTimings.add(examDate);
+                    } else {
+                        for (ExamDateTime curr : examTimings) {
+                            if (curr.coincide(examDate)) {
+                                hasError = true;
+                                Intent errorTT = new Intent(getApplicationContext(), ExamClashError.class);
+                                startActivity(errorTT);
+                                break;
+                            }
+
+                        }
+                        examTimings.add(examDate);
+                    }
+                    /*new*/
+
+                    Module newModule = DataManagement.makeModule(newModuleCode, lessonsList);
                     if (newModule == null) {
                         hasError = true;
-                        //System.out.println("Null Module Error");
-                        //cant find module
                         Intent errorTT = new Intent(getApplicationContext(), NullModuleError.class);
                         startActivity(errorTT);
                         break;
                     } else {
                         modulesTaking[i] = newModule;
 
-                        /*New 1*/
+
                         if (newModule.getCode().equals(conditionLessonModuleCode)) {
                             List<Lesson> conditionLesson = newModule.getLesson(conditionLessonNum, conditionLessonType);
                             if (conditionLesson.isEmpty()) {
@@ -210,7 +233,7 @@ public class ViewTimetable extends AppCompatActivity {
                                 }
                             }
                         }
-                        /*End of New 1*/
+
 
                         if (!newModule.getLect().isEmpty()) {
                             AllLesson lecture = newModule.getLect();

@@ -1,5 +1,9 @@
 package com.example.myfirstapplication;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
@@ -16,10 +20,12 @@ class FilterFreeDay {
         this.timetable = timetable;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public List<AllLesson> filter() {
         if (this.freeDay == null) {
             return this.unfilteredLesson;
         } else if (this.freeDay.isEmpty()) {
+            System.out.println("ffd error 1");
             return null;
         } else {
             List<AllLesson> filteredLesson = new ArrayList<>();
@@ -27,11 +33,11 @@ class FilterFreeDay {
                 filteredLesson.add(AllLesson.deepCopy(allLesson));
             }
 
-            boolean hasError = false;
             for (AllLesson allLesson : filteredLesson) {
                 //remove cmi lessons
 
                 if (this.freeDay.isEmpty()) {
+                    System.out.println("ffd error 2 " + allLesson);
                     return null;
                 } else {
                     List<Lesson> removeLesson = new ArrayList<>();
@@ -53,14 +59,17 @@ class FilterFreeDay {
                         }
                     }
 
+
                     if (allLesson.getIsGrouped()) {
                         //double check, remove lessons w the same lesson code when one of them falls on free day
                         for (Lesson lesson : allLesson.getAllTimings()) {
                             //remove same code
                             if (removedLessonCode.contains(lesson.getNum()) && !removeLesson.contains(lesson)) {
                                 removeLesson.add(lesson);
+
                             }
                         }
+
                     }
 
                     //not all lessons are removed
@@ -69,9 +78,92 @@ class FilterFreeDay {
                             allLesson.remove(lesson);
                         }
 
-                        continue;
+
                     } else {
-                        //everything in the removeLesson list lie on the free day
+                        List<Lesson> lessons = new ArrayList<>();
+                        List<Lesson> bestLessons = new ArrayList<>();
+
+                        if (allLesson.getIsGrouped()) {
+                            boolean added = false;
+                            boolean isPossible = false;
+                            int freeDays = 0;
+                            int days = 6;
+
+                            for (Lesson lesson : allLesson.getAllTimings()) {
+                                List<Integer> listOfDays = new ArrayList<>();
+                                lessons = allLesson.findLesson(lesson.getNum());
+                                for (Lesson checkLesson : lessons) {
+                                    if (!this.timetable.check(checkLesson)) {
+                                        isPossible = false;
+                                        break;
+                                    } else {
+                                        if (!listOfDays.contains(checkLesson.getDay())) {
+                                            listOfDays.add(checkLesson.getDay());
+                                        }
+                                        isPossible = true;
+                                    }
+                                }
+                                if (isPossible) {
+                                    for (int day : listOfDays) {
+                                        if (this.freeDay.contains(day)) {
+                                            freeDays++;
+                                        }
+                                    }
+                                    if (freeDays < days) {
+                                        days = freeDays;
+                                        bestLessons = lessons;
+                                    }
+                                    break;
+                                }
+                            }
+                            if (isPossible) {
+                                added = true;
+                                for (Lesson checkedLesson : bestLessons) {
+                                    if (this.freeDay.contains(checkedLesson.getDay())) {
+                                        this.freeDay.remove((Integer) checkedLesson.getDay());
+                                    }
+                                }
+                            }
+                            if (!added) {
+                                System.out.println("ffd error 3 " + allLesson);
+                                return null;
+                            } else {
+                                allLesson.setLesson(lessons);
+                            }
+
+                        } else {
+                            boolean added = false;
+                            for (Lesson lesson : allLesson.getAllTimings()) {
+                                if (this.timetable.check(lesson)) {
+                                    lessons.add(lesson);
+                                    allLesson.setLesson(lessons);
+                                    added = true;
+                                    if (!this.freeDay.contains(lesson.getDay())) {
+                                        this.freeDay.remove((Integer) lesson.getDay());
+                                    }
+                                    break;
+                                }
+                            }
+                            if (!added) {
+                                return null;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (this.freeDay.isEmpty()) {
+                System.out.println("ffd error 4 ");
+                return null;
+            } else {
+                //filteredLesson.sort(comp);
+                return filteredLesson;
+            }
+        }
+    }
+}
+
+                        /*//everything in the removeLesson list lie on the free day
                         //get the first possible set out first (shld hv at least one free day)
                         removeLesson = new ArrayList<>();
                         boolean included = false;
@@ -132,16 +224,16 @@ class FilterFreeDay {
                         }
                     }
                 }
+            }*/
+/*            if (this.freeDay.isEmpty()) {
+                return null;
+            } else {
+                filteredLesson.sort(comp);
+                return filteredLesson;
             }
-                if (this.freeDay.isEmpty()) {
-                    return null;
-                } else {
-                    filteredLesson.sort(comp);
-                    return filteredLesson;
-                }
         }
     }
-}
+}*/
 
 
 

@@ -170,8 +170,8 @@ public class Timetable {
 
                 //first confirmedlesson
                 if (i == 0 && confirmedLesson.getStartTime() >= endOfNewLesson) {
-                        return true;
-                    }
+                    return true;
+                }
 
                 if (i == selectedList.size() - 1) {
                     //NewLesson happens after the end of the confirmedLesson
@@ -187,11 +187,11 @@ public class Timetable {
 
                     //start time of newLesson is during the confirmedLesson
                     if (confirmedLesson.getStartTime() <= startOfNewLesson
-                            && startOfNewLesson <= confirmedLesson.getEndTime()) {
+                            && startOfNewLesson < confirmedLesson.getEndTime()) {
                         return false;
                         //end time of newLesson is during confirmedLesson
                     } else if (confirmedLesson.getStartTime() <= endOfNewLesson
-                            && endOfNewLesson <= confirmedLesson.getEndTime()) {
+                            && endOfNewLesson < confirmedLesson.getEndTime()) {
                         return false;
                         //newLesson is in between 2 confirmed lesson
                     } else if (confirmedLesson.getEndTime() <= startOfNewLesson && endOfNewLesson <= nextConfirmedLesson.getStartTime()) {

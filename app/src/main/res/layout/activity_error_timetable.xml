@@ -34,7 +34,7 @@
         android:id="@+id/noIdealTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:text="@string/no_ideal_warning"
         android:textColor="@color/purple"
         android:textSize="20sp"
@@ -48,7 +48,6 @@
         android:id="@+id/refineButton"
         android:layout_width="167dp"
         android:layout_height="41dp"
-        android:layout_marginTop="76dp"
         android:layout_marginBottom="160dp"
         android:background="@color/blue"
         android:text="@string/refine_criteria_button"
@@ -57,7 +56,5 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noIdealTextview"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

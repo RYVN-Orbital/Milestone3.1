@@ -30,9 +30,10 @@
     <string name="info_text">Information</string>
     <string name="edit_mods">Edit Modules</string>
     <string name="edit_condition">Edit Condition</string>
-    <string name="create_tt">Create Timetable</string>
+    <string name="create_tt">View Timetable</string>
     <string name="current_tt">Current Timetable</string>
-    <string name="save_my_tt">Save My Timetable</string>
+    <string name="save_my_tt">Save Timetable</string>
+    <string name="bookmark_tt">Bookmark</string>
     <string name="checkbox">com.example.myfirstapplication.checkbox</string>
     <string name="timetable">com.example.myfirstapplication.timetable</string>
     <string-array name="criteria">

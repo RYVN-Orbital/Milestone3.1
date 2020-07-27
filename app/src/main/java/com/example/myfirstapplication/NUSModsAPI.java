@@ -47,13 +47,8 @@ public class NUSModsAPI {
         return sb.toString();
     }
 
-    //for now, since each link is only info for one mod
-    //sort all the json object into lesson objects and initialise the list
-    public static List<Lesson> fetchLessonTimings(String modCode) throws IOException, JSONException {
-
-        //create variable to hold return data
+    public static ExamDateTime fetchExamDate(String moduleCode) throws IOException, JSONException {
         ArrayList<Lesson> allLessonTimings = new ArrayList<>();
-        String moduleCode = modCode;
 
         //form api website
         String website = "https://api.nusmods.com/v2/2020-2021/modules/";
@@ -69,7 +64,60 @@ public class NUSModsAPI {
 
             //parse the JSON string
             JSONObject jsonLessons = new JSONObject(result);
-            Iterator<String> listOfKeys = jsonLessons.keys();
+            JSONArray lessonsInfo = jsonLessons.getJSONArray("semesterData");
+            //lessonsinfo from semester data is a list of 3 semesters and their timetables
+            //get the timing and venue for all the lessons of the module
+
+            JSONObject semData;
+            JSONObject sem = null;
+
+            for (int i = 0; i < lessonsInfo.length(); i++ ) {
+                semData = (JSONObject) lessonsInfo.get(i);
+                if (semData.getInt("semester") == 1) {
+                    sem = semData;
+                    break;
+                }
+            }
+
+            if (sem == null) {
+                return null;
+            }
+            Iterator<String> listOfKeys = sem.keys();
+            while (listOfKeys.hasNext()) {
+                if (listOfKeys.next().equals("examDate")) {
+                    String examDateForSem = sem.getString("examDate");
+                    int examDuration = sem.getInt("examDuration");
+                    return new ExamDateTime(examDateForSem, examDuration);
+                }
+            }
+            return ExamDateTime.emptyExamDateTime();
+
+        }
+    }
+
+
+    //for now, since each link is only info for one mod
+    //sort all the json object into lesson objects and initialise the list
+    public static List<Lesson> fetchLessonTimings(String moduleCode) throws IOException, JSONException {
+
+        //create variable to hold return data
+        ArrayList<Lesson> allLessonTimings = new ArrayList<>();
+
+        //form api website
+        String website = "https://api.nusmods.com/v2/2020-2021/modules/";
+        String jsonWeb = ".json";
+
+        //fetch json data and parse into string
+        String moduleInfo = website + moduleCode + jsonWeb;
+        String result = NUSModsAPI.request(moduleInfo);
+
+        if (result.equals("no module found")) {
+            return null;
+        } else {
+
+            //parse the JSON string
+            JSONObject jsonLessons = new JSONObject(result);
+            //Iterator<String> listOfKeys = jsonLessons.keys();
             //while (listOfKeys.hasNext()) {
             // get timetable of all lessons
             //if (listOfKeys.next() == "semesterData") {

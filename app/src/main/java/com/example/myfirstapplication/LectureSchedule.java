@@ -1,5 +1,10 @@
 package com.example.myfirstapplication;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -19,6 +24,7 @@ public class LectureSchedule {
 
     //return type is boolean
     //true if the scheduling is successful and vice versa
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean scheduling(List<Integer> freeDay) {
 
         //usually fixed lesson is only for lectures
@@ -36,7 +42,7 @@ public class LectureSchedule {
 
                 //included = true suggests that the lesson list is added to either fixedLectures or notFixedLectures
                 boolean included = false;
-                for (int i = 1; i < allLesson.size(); ++ i) {
+                for (int i = 1; i < allLesson.size(); ++i) {
                     if (!allLesson.getAllTimings().get(i).getNum().equals(lessonCode)) {
                         notFixedLessons.add(allLesson);
                         included = true;
@@ -44,7 +50,7 @@ public class LectureSchedule {
                     }
                 }
                 //all the lectures in the list have the same lesson code
-                if (! included) {
+                if (!included) {
                     fixedLessons.add(allLesson);
                 }
             }
@@ -96,11 +102,167 @@ public class LectureSchedule {
 
         for (AllLesson listLessons : newFilteredList) {
             //hasAdded indicates whether a lecture has been added into the tt
-            boolean hasAdded = false;
+            /*boolean hasAdded = false;
             String lessonNum = "";
-            Lesson addedLesson = null;
+            Lesson addedLesson = null;*/
             //getAlltimings == possibleTime() cuz alr filtered in lesson Sim
-            for (Lesson newLesson : listLessons.getAllTimings()) {
+
+            List<Lesson> newLessonList;
+            boolean isPossible = false;
+            boolean hasAdded = false;
+
+            if (listLessons.getIsGrouped()) {
+                for (Lesson newLesson : listLessons.getAllTimings()) {
+                    newLessonList = listLessons.findLesson(newLesson.getNum());
+                    for (Lesson lesson : newLessonList) {
+                        if (!this.timetable.check(lesson)) {
+                            isPossible = false;
+                            break;
+                        } else {
+                            isPossible = true;
+                        }
+                    }
+                    //}
+
+                    if (isPossible) {
+                        hasAdded = true;
+                        for (Lesson lesson : newLessonList) {
+                            this.timetable.add(lesson);
+                        }
+                        break;
+                    } else {
+                        hasAdded = false;
+                    }
+                }
+            } else {
+                for (Lesson newLesson : listLessons.getAllTimings()) {
+                    if (!this.timetable.check(newLesson)) {
+                        hasAdded = false;
+                    } else {
+                        this.timetable.add(newLesson);
+                        hasAdded = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!hasAdded) {
+                for (AllLesson ogLesson : this.listOfLessons) {
+                    boolean added = false;
+                    if (ogLesson.getCode().equals(listLessons.getCode())) {
+                        //single lesson
+                        if (!ogLesson.getIsGrouped()) {
+                            for (Lesson lesson : ogLesson.getAllTimings()) {
+                                if (this.timetable.check(lesson)) {
+                                    added = true;
+                                    this.timetable.add(lesson);
+                                    break;
+                                }
+                            }
+                            if (!added) {
+                                System.out.println("error 6");
+                                this.timetable.setPossibleFreeDay(noFreeDay);
+                                return false;
+
+                            } else { //added
+                                ArrayList<Integer> removeDays = new ArrayList<>();
+                                //fixed days
+                                for (int day : this.timetable.getPossibleFreeDay()) {
+                                    if (!this.timetable.getFreeDay().contains(day)) {
+                                        removeDays.add(day);
+                                    }
+                                }
+
+                                for (int day : removeDays) {
+                                    this.timetable.removeFreeDay(day);
+                                }
+                                continue;
+                                //return true;
+                            }
+
+                            //multiple lessons
+                        } else {
+                            List<Lesson> bestLessonList = new ArrayList<>();
+                            int leastDays = 7;
+                            int currDays = 0;
+                            isPossible = false;
+                            List<Lesson> currentLessonList;
+
+                            for (Lesson lesson : ogLesson.getAllTimings()) {
+                                currentLessonList = ogLesson.findLesson(lesson.getNum());
+                                for (Lesson checkLesson : currentLessonList) {
+                                    if (!this.timetable.check(checkLesson)) {
+                                        isPossible = false;
+                                        break;
+                                    } else {
+                                        isPossible = true;
+                                    }
+                                }
+
+                                if (isPossible) {
+                                    List<Integer> days = this.timetable.getFreeDay();
+                                    for (Lesson checkedLesson : currentLessonList) {
+                                        if (days.contains(checkedLesson.getDay())) {
+                                            currDays++; //least the better, means more freeDay
+                                        }
+                                    }
+                                    if (currDays < leastDays) {
+                                        bestLessonList = currentLessonList;
+                                    }
+                                } // else continue to look for other possible lessons
+                            }
+
+                            if (bestLessonList.isEmpty()) {
+                                added = false;
+                            } else {
+                                for (Lesson lesson : bestLessonList) {
+                                    this.timetable.add(lesson);
+                                }
+                                added = true;
+                            }
+                        }
+
+                        if (!added) {
+                            System.out.println("error 7");
+                            this.timetable.setPossibleFreeDay(noFreeDay);
+                            return false;
+
+                        } else { //added
+                            ArrayList<Integer> removeDays = new ArrayList<>();
+                            for (int day : this.timetable.getPossibleFreeDay()) {
+                                if (!this.timetable.getFreeDay().contains(day)) {
+                                    removeDays.add(day);
+                                }
+                            }
+
+                            for (int day : removeDays) {
+                                this.timetable.removeFreeDay(day);
+                            }
+                            //return true;
+                        }
+
+
+                    }
+                }
+            } else { //hasadded
+                ArrayList<Integer> removeDays = new ArrayList<>();
+                for (int day : this.timetable.getPossibleFreeDay()) {
+                    if (!this.timetable.getFreeDay().contains(day)) {
+                        removeDays.add(day);
+                    }
+                }
+
+                for (int day : removeDays) {
+                    this.timetable.removeFreeDay(day);
+                }
+                //return true;
+            }
+        }
+        return true;
+    }
+}
+
+            /*for (Lesson newLesson : listLessons.getAllTimings()) {
                 if (hasAdded) { //ensure that we have included all the lectures w the same lesson code
                     if (lessonNum.equals(newLesson.getNum())) {
                         if (this.timetable.check(newLesson)) {
@@ -181,9 +343,9 @@ public class LectureSchedule {
                 }
             }
 
-        }
+        }*/
 
-        ArrayList<Integer> removeDays = new ArrayList<>();
+     /*   ArrayList<Integer> removeDays = new ArrayList<>();
         for (int day : this.timetable.getPossibleFreeDay()) {
             if (!this.timetable.getFreeDay().contains(day)) {
                 removeDays.add(day);
@@ -196,4 +358,4 @@ public class LectureSchedule {
 
         return true;
     }
-}
+}*/

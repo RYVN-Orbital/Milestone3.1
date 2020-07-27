@@ -50,15 +50,17 @@ class Schedule {
                             isPossible = true;
                         }
                     }
-                }
+                    //}
 
-                if (isPossible) {
-                    hasAdded = true;
-                    for (Lesson newLesson : listLessons.getAllTimings()) {
-                        this.timetable.add(newLesson);
+                    if (isPossible) {
+                        hasAdded = true;
+                        for (Lesson lesson : newLessonList) {
+                            this.timetable.add(lesson);
+                        }
+                        break;
+                    } else {
+                        hasAdded = false;
                     }
-                } else {
-                    hasAdded = false;
                 }
             } else {
 
@@ -188,7 +190,7 @@ class Schedule {
     }
 
 }
-            //hasAdded indicates whether a lecture has been added into the tt
+//hasAdded indicates whether a lecture has been added into the tt
  /*           boolean hasAdded = false;
             String lessonNum = "";
             Lesson addedLesson = null;
