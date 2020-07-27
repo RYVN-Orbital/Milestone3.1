@@ -19,7 +19,7 @@ public class NoTimetable extends AppCompatActivity {
         generateTimetableButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent generateNewTimetable = new Intent(getApplicationContext(), SetRequirement.class);
+                Intent generateNewTimetable = new Intent(getApplicationContext(), EditModules.class);
                 startActivity(generateNewTimetable);
             }
         });

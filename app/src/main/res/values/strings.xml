@@ -34,6 +34,16 @@
     <string name="current_tt">Current Timetable</string>
     <string name="save_my_tt">Save Timetable</string>
     <string name="bookmark_tt">Bookmark</string>
+    <string name="help_textview">
+        After selecting your modules and condition,
+        Click View TT button to view the new timetable generated.
+        Click the checkbox and bookmark icon
+        To save your timetable.
+        Click Information button to find out more about the timetable.
+        Click Edit Modules button to edit the list of modules.
+        Click Edit Condition button to edit your condition chosen.
+        Click back to go back to the previous activity.
+    </string>
     <string name="checkbox">com.example.myfirstapplication.checkbox</string>
     <string name="timetable">com.example.myfirstapplication.timetable</string>
     <string-array name="criteria">

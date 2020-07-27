@@ -30,6 +30,7 @@ public class ViewTimetable extends AppCompatActivity {
     public Button infoButton;
     public Button editConditionButton;
     public Button editModsBtn;
+    public Button helpBtn;
     private Handler mainHandler = new Handler();
 
     private SharedPreferences mPreferences;
@@ -75,6 +76,17 @@ public class ViewTimetable extends AppCompatActivity {
             public void onClick(View v) {
                 Intent editCondIntent = new Intent(getApplicationContext(), EditModules.class);
                 startActivity(editCondIntent);
+            }
+        });
+
+        //help button
+        helpBtn = (Button) findViewById(R.id.helpButton);
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent helpIntent = new Intent(getApplicationContext(), helpActivity.class);
+                startActivity(helpIntent);
             }
         });
 
