@@ -8,5 +8,7 @@
     <color name="pink">#E8B5CE</color>
     <color name="blue"> #6C86AB</color>
     <color name = "darkBlue">#FF596E8C</color>
+    <color name="darkPink">#E6A4C5</color>
+    <color name="grey">#A1A1A1</color>
 
 </resources>

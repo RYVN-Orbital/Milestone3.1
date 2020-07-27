@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -191,21 +192,20 @@ public class ViewTimetable extends AppCompatActivity {
                         Intent errorTT = new Intent(getApplicationContext(), NullModuleError.class);
                         startActivity(errorTT);
                         break;
-                    } else if (examDate.isEmpty()) {
-                        continue;
-                    } else if (examTimings.isEmpty()) {
-                        examTimings.add(examDate);
-                    } else {
-                        for (ExamDateTime curr : examTimings) {
-                            if (curr.coincide(examDate)) {
-                                hasError = true;
-                                Intent errorTT = new Intent(getApplicationContext(), ExamClashError.class);
-                                startActivity(errorTT);
-                                break;
+                    } else if (!examDate.isEmpty()) {
+                        if (examTimings.isEmpty()) {
+                            examTimings.add(examDate);
+                        } else {
+                            for (ExamDateTime curr : examTimings) {
+                                if (curr.coincide(examDate)) {
+                                    hasError = true;
+                                    Intent errorTT = new Intent(getApplicationContext(), ExamClashError.class);
+                                    startActivity(errorTT);
+                                    break;
+                                }
                             }
-
+                            examTimings.add(examDate);
                         }
-                        examTimings.add(examDate);
                     }
                     /*new*/
 
@@ -325,7 +325,7 @@ public class ViewTimetable extends AppCompatActivity {
                                     List<Lesson> lessons = allLessons.get(i);
                                     for (Lesson lesson : lessons) {
                                         Spannable lessonString = new SpannableString("\n" + lesson.toString());
-                                        lessonString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.pink)), 0, lessonString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                        lessonString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.darkPink)), 0, lessonString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                                         timetableTextView.append(lessonString);
                                     }
                                 }

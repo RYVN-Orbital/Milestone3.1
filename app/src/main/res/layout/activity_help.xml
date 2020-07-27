@@ -8,41 +8,29 @@
 
     <TextView
         android:id="@+id/helpTextView"
-        android:layout_width="409dp"
-        android:layout_height="502dp"
-        android:text="
-        After selecting your modules and condition, \n
-        \n
-        Click View TT button to view the new timetable generated. \n
-        \n
-        Click the Checkbox and Bookmark button to save your timetable. \n
-        \n
-        Click Information button to find out more about the timetable. \n
-        \n
-        Click Edit Modules button to edit the list of modules. \n
-        \n
-        Click Edit Condition button to edit your condition chosen. \n
-        \n
-        Click back to go back to the previous activity. "
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="After selecting your modules and condition, \n \nClick View Timetable button to view the new timetable generated. \n \nClick the Checkbox and Bookmark button to save your timetable. \n  \nClick Information button to find out more about the timetable. \n \nClick Edit Modules button to edit the list of modules. \n  \nClick Edit Condition button to edit your condition chosen. \n \nClick back to go back to the previous activity. "
+        android:textColor="@color/darkBlue"
+        android:textSize="18sp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.633" />
+        app:layout_constraintTop_toBottomOf="@+id/closeButton" />
 
     <Button
         android:id="@+id/closeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="77dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@color/blue"
         android:text="@string/close_info_button"
         android:textColor="@color/pink"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

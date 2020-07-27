@@ -7,18 +7,25 @@ public class ExamDateTime {
     public boolean isEmpty;
 
     public ExamDateTime(String rawDateTime, int duration) {
-        this.date = rawDateTime.substring(0, 10);
-        //01:00:00 format
-        String rawTime = rawDateTime.substring(11,19);
-        int hour = Integer.parseInt(rawTime.substring(0,2));
-        int min = Integer.parseInt(rawTime.substring(3,5));
-        //start time/ end time will be in this format: 100 (1am/pm) , 120 (1am/pm 20min)
-        this.startTime = hour * 100 + min;
-        int totalMinutes = hour * 60 + min + duration;
-        int endMin = totalMinutes % 60; //remainder is the minutes
-        int endHr = totalMinutes / 60;
-        this.endTime = endHr * 100 + endMin;
-        this.isEmpty = false;
+        if (rawDateTime.equals("") && duration == 0) {
+            this.date = "";
+            this.startTime = 0;
+            this.endTime = 0;
+            this.isEmpty = true;
+        } else {
+            this.date = rawDateTime.substring(0, 10);
+            //01:00:00 format
+            String rawTime = rawDateTime.substring(11, 19);
+            int hour = Integer.parseInt(rawTime.substring(0, 2));
+            int min = Integer.parseInt(rawTime.substring(3, 5));
+            //start time/ end time will be in this format: 100 (1am/pm) , 120 (1am/pm 20min)
+            this.startTime = hour * 100 + min;
+            int totalMinutes = hour * 60 + min + duration;
+            int endMin = totalMinutes % 60; //remainder is the minutes
+            int endHr = totalMinutes / 60;
+            this.endTime = endHr * 100 + endMin;
+            this.isEmpty = false;
+        }
     }
 
     public String getDate() {
@@ -56,17 +63,12 @@ public class ExamDateTime {
 
     }
 
-    public void setEmpty() {
-        this.isEmpty = true;
-    }
-
     public boolean isEmpty() {
         return this.isEmpty;
     }
 
     public static ExamDateTime emptyExamDateTime() {
         ExamDateTime dateTime = new ExamDateTime("",0);
-        dateTime.setEmpty();
         return dateTime;
     }
 }
