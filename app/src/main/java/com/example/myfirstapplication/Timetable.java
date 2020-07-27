@@ -22,6 +22,11 @@ public class Timetable {
         this.possibleFreeDay.addAll(days);
     }
 
+    public List<List<Lesson>> getSchedule() {
+        List<List<Lesson>> lessons = Arrays.asList(monday, tuesday, wednesday, thursday, friday, saturday);
+        return lessons;
+    }
+
     public int getNum() {
         return this.ttNum;
     }

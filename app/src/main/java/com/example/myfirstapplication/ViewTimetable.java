@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,6 +21,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.lang.Runnable;
 
@@ -295,10 +299,36 @@ public class ViewTimetable extends AppCompatActivity {
                     ViewTimetable.confirmedTT = simulator.generate(tt.getPossibleFreeDay());
                     if (confirmedTT.getPossible()) {
                         System.out.println(confirmedTT);
-                        runOnUiThread(new Runnable() {
+                        /*runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 timetableTextView.setText(confirmedTT.toString());
+                            }*/
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                List<String> days = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+                                List<List<Lesson>> allLessons = confirmedTT.getSchedule();
+
+                                for (int i = 0; i < allLessons.size(); i++ ) {
+
+                                    if (i == 0) {
+                                        Spannable day = new SpannableString("\n"+ "\n" + days.get(i));
+                                        day.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.blue)), 0, day.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                        timetableTextView.setText(day);
+                                    } else {
+                                        Spannable day = new SpannableString("\n" + "\n" + days.get(i));
+                                        day.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.blue)), 0, day.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                        timetableTextView.append(day);
+                                    }
+
+                                    List<Lesson> lessons = allLessons.get(i);
+                                    for (Lesson lesson : lessons) {
+                                        Spannable lessonString = new SpannableString("\n" + lesson.toString());
+                                        lessonString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.pink)), 0, lessonString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                        timetableTextView.append(lessonString);
+                                    }
+                                }
                             }
                         });
                     } else {
