@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".helpActivity"
+            android:label="My Timetable" />
+        <activity
             android:name=".ExamClashError"
             android:label="My Timetable" />
         <activity
