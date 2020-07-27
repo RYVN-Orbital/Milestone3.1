@@ -45,9 +45,8 @@ public class TimetableInfo extends AppCompatActivity {
         String conditionLessonModuleCode = modEditText.getText().toString();
         String conditionLessonNum = lessonCodeEditText.getText().toString();
         String conditionLessonType = typeSpinner.getSelectedItem().toString();
-        //if there is no specific lesson chosen
-        //havent solved ths part yet!!!!!!
-        if (modEditText.getText() == null || lessonCodeEditText.getText() == null) {
+
+        if (modEditText.getText().toString().equals("") && lessonCodeEditText.getText().toString().equals("")) {
             lessonTextView.setText("None");
         } else {
             lesson = conditionLessonModuleCode + " " + conditionLessonType + " " + conditionLessonNum;
